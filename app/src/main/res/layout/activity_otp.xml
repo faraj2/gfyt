@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/consta"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.f.schoolsintouchteachers.Otp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <RelativeLayout
+        android:id="@+id/emiter_top_left"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/mycolor">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/etPasswordotp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edittext_white"
+            android:drawableLeft="@android:drawable/ic_dialog_dialer"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="6"
+            android:padding="7dp"
+            android:textColor="@color/mycolor" />
+
+        <Button
+            android:layout_centerHorizontal="true"
+            android:id="@+id/btnextotp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+
+            android:layout_below="@+id/etPasswordotp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_white"
+            android:onClick="next"
+            android:text="Next"
+            android:textAllCaps="true"
+            android:textColor="@color/cardview_light_background" />
+
+
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:tint="@color/bluecolor"
+            app:srcCompat="@drawable/intouch" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="103dp"
+            android:tint="@color/bluecolor"
+            app:srcCompat="@drawable/fingerclick" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:layout_below="@+id/imageView4"
+            android:layout_centerHorizontal="true"
+            android:text="TextView" />
+    </RelativeLayout>
+
+
+</FrameLayout>

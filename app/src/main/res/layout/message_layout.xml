@@ -1,0 +1,69 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_layout_left"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/pppatch"
+    android:layout_margin="10dp"
+
+    >
+
+    <!--<TextView-->
+        <!--android:id="@+id/lblMsgFrom"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="kfhdjbh"-->
+        <!--android:textColor="@color/bluecolor"-->
+        <!--android:textSize="12sp"-->
+        <!--android:textStyle="italic"-->
+        <!--/>-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+
+        <!--android:src="@drawable/blueroom"-->
+        <!--/>-->
+
+    <FrameLayout
+
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+       >
+
+        <TextView
+            android:id="@+id/txtTimeFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="Time"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="bottom|right"
+            android:padding="4dp"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:paddingEnd="5dp" />
+
+        <TextView
+            android:id="@+id/txtMsgFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="kdfjhgjfhf"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="0dp" />
+    </FrameLayout>
+
+</RelativeLayout>

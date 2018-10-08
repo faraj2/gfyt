@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:minHeight="48dp"
+    android:padding="5dp"
+    android:background="@drawable/layout_draw"
+    android:drawableRight="@android:drawable/arrow_down_float"
+    android:foreground="?selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:drawableEnd="@android:drawable/arrow_down_float">
+
+    <CheckBox
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/node_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="28dp"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toRightOf="@id/node_selector"
+        android:orientation="vertical"
+        android:id="@+id/picture_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/top_line"
+            android:background="#12558C"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="1dp"
+            android:layout_height="16dp" />
+
+        <com.github.johnkil.print.PrintView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:iconColor="#12558C"
+            app:iconFont="fonts/material-icon-font.ttf"
+            app:iconSize="16dp"
+            app:iconText="@string/ic_check_circle_blank" />
+
+        <View
+            android:id="@+id/bot_line"
+            android:background="#12558C"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="1dp"
+            android:layout_height="16dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@color/cardview_light_background"
+        android:id="@+id/textx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/picture_wrapper"
+        android:textSize="16sp" />
+</RelativeLayout>

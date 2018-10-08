@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:id="@+id/linrlyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/bluecolor"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="posted on:31/jun/2018"
+        android:textColor="@android:color/background_light" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <FrameLayout
+
+        android:id="@+id/framecontainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="visible">
+
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/ytb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            app:resize_mode="fixed_height"
+            app:surface_type="texture_view" />
+
+        <ImageView
+            android:id="@+id/thumbnailpic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:src="@drawable/blueroom" />
+        <ImageButton
+            android:id="@+id/ply"
+            android:background="@android:color/transparent"
+            android:src="@drawable/playbutton"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/donut"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:donut_inner_drawable="@drawable/cancel"
+            app:donut_finished_stroke_width="5dp"
+            app:donut_show_text="false"
+            app:donut_circle_starting_degree="10"
+            app:donut_unfinished_stroke_width="1dp"
+            app:donut_unfinished_color="@color/myblue"
+            />
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressImageButton
+            android:id="@+id/progressButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_play"
+            app:spinning_bar_color="@color/myblue"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="5dp" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyimages"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/donut1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:donut_inner_drawable="@drawable/cancel"
+            app:donut_finished_stroke_width="5dp"
+            app:donut_show_text="false"
+            app:donut_circle_starting_degree="10"
+            app:donut_unfinished_stroke_width="1dp"
+            app:donut_unfinished_color="@color/myblue"
+            />
+        </FrameLayout>
+    <View
+        android:id="@+id/views"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layout_marginTop="10dp"
+        android:background="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/txtpost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/views"
+        android:layout_margin="10dp"
+        android:text="This my first post from our school playground."
+        android:textColor="@android:color/background_light" />
+<RelativeLayout
+    android:layout_gravity="end"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+
+        android:id="@+id/claps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="80dp"
+        android:textColor="@android:color/background_light"
+         />
+
+    <com.varunest.sparkbutton.SparkButton
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnlike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:scaleX="1.6"
+        android:scaleY="1.6"
+        app:sparkbutton_activeImage="@drawable/clapped"
+        app:sparkbutton_iconSize="20dp"
+        app:sparkbutton_inActiveImage="@drawable/clapings"
+        app:sparkbutton_primaryColor="@color/cardview_light_background"
+        app:sparkbutton_secondaryColor="@color/clapped" />
+
+</RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <View
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+</FrameLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#059500</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="greens">#059500</color>
+    <color name="bottombar">#af99eb72</color>
+    <color name="ettt">#D2F9FCF9</color>
+    <color name="mycolor">#3c3f41</color>
+    <color name="mycolorr">#8df789</color>
+    <color name="bluecolor">#497695</color>
+    <color name="torqiz">#00d3ff</color>
+    <color name="myblue">#8ae5f8</color>
+    <color name="clapped">#ff7401</color>
+</resources>

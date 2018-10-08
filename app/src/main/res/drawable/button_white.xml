@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="20dp" />
+    <solid android:color="@color/bluecolor"/>
+    <stroke android:color="@color/cardview_light_background" android:width="2dp"/>
+    <padding android:left="3dp" android:right="3dp"/>
+</shape>

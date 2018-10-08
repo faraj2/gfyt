@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/mytextseek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="maths" />
+
+    <com.warkiz.widget.IndicatorSeekBar
+        android:id="@+id/myindicator"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:isb_forbid_user_seek="true"
+        app:isb_indicator_color="@color/bluecolor"
+        app:isb_indicator_type="circular_bubble"
+        app:isb_progress="50"
+        app:isb_seek_bar_type="continuous_texts_ends"
+        app:isb_show_indicator="true"
+        app:isb_indicator_stay="true"
+
+        app:isb_text_color="@color/torqiz"
+
+        app:isb_tick_type="oval"
+        app:isb_track_progress_bar_color="@color/torqiz" />
+
+</LinearLayout>
