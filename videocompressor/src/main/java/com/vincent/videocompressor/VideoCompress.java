@@ -29,7 +29,7 @@ public class VideoCompress {
         return task;
     }
 
-    private static class VideoCompressTask extends AsyncTask<String, Float, Boolean> {
+    public static class VideoCompressTask extends AsyncTask<String, Float, Boolean> {
         private CompressListener mListener;
         private int mQuality;
 

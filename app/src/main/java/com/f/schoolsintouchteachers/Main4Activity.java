@@ -25,17 +25,19 @@ public class Main4Activity extends AppCompatActivity {
     Profilefragment profilefragment;
     CoordinatorLayout frameLayout;
     private Snackbar snackbar;
+    public static CustomViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
-        ViewPager viewPager=findViewById(R.id.vp_vertical_ntb);
+         viewPager=findViewById(R.id.vp_vertical_ntb);
         RelativeLayout relativeLayout=findViewById(R.id.back);
         relativeLayout.addView(new BlueView(this));
 
         myfragments=new Myfragments(getSupportFragmentManager());
         viewPager.setAdapter(myfragments);
+
 
 profilefragment=new Profilefragment();
         final String[] colors = getResources().getStringArray(R.array.colors);

@@ -19,9 +19,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -33,7 +35,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,15 +47,23 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.devlomi.record_view.OnBasketAnimationEnd;
+import com.devlomi.record_view.OnRecordClickListener;
+import com.devlomi.record_view.OnRecordListener;
+import com.devlomi.record_view.RecordButton;
+import com.devlomi.record_view.RecordView;
+import com.f.schoolsintouchteachers.adapters.AudioViewholder;
 import com.f.schoolsintouchteachers.adapters.HomeAdapter;
 import com.f.schoolsintouchteachers.adapters.PreviewpicsAdapter;
 import com.f.schoolsintouchteachers.firebase.Config;
 import com.f.schoolsintouchteachers.firebase.HttpAsync;
 import com.f.schoolsintouchteachers.models.Post;
 import com.f.schoolsintouchteachers.models.realmObjects.Pst;
+import com.f.schoolsintouchteachers.trails.TestRecord;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,6 +96,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import im.ene.toro.PlayerSelector;
 import im.ene.toro.widget.Container;
 import io.codetail.animation.ViewAnimationUtils;
 import io.realm.Realm;
@@ -101,6 +114,8 @@ import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
 
 public class Homefragment extends Fragment implements EasyPermissions.PermissionCallbacks {
     private static final int RC_WRITESTORAGE = 121;
+    private static final int RC_AUDIO = 122;
+    String[] perms = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
     private Container recyclerView;
     private String outputDir = Environment.getExternalStorageDirectory().getAbsolutePath();
     private static final int IMAGE_PICKER_SELECT = 1;
@@ -134,6 +149,12 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
     View layview;
     ImageButton pic, vid;
     private Animator animator;
+    private RelativeLayout reltv;
+    private RecordButton recordButton;
+    private RecordView recordView;
+    private CountDownTimer countdon;
+    private MediaRecorder mediaRecorder;
+    private String AudioSavePathInDevice;
 
 
     //   private MyFfmeg ffmeg;
@@ -294,7 +315,106 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
         cardpics.setVisibility(View.GONE);
         recycpics = view.findViewById(R.id.recypics);
         sendd = view.findViewById(R.id.send);
+        sendd.setVisibility(View.GONE);
         posttext = view.findViewById(R.id.messagepost);
+        recordView = view.findViewById(R.id.record_view);
+        recordButton = view.findViewById(R.id.record_button);
+        recordButton.setRecordView(recordView);
+        recordButton.setListenForRecord(false);
+        recordView.setLessThanSecondAllowed(false);
+        reltv = view.findViewById(R.id.reltv);
+        if (checkaudioperm()) {
+            recordButton.setListenForRecord(true);
+        }
+        recordButton.setOnRecordClickListener(new OnRecordClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermissions(perms, RC_AUDIO);
+            }
+        });
+        recordView.setOnRecordListener(new OnRecordListener() {
+            @Override
+            public void onStart() {
+                Main4Activity.viewPager.setPagingEnabled(false);
+                reltv.setVisibility(View.GONE);
+                countdon = new CountDownTimer(300000, 1000) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        //   Toast.makeText(TestRecord.this, String.valueOf(millisUntilFinished/1000), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }.start();
+                MediaRecorderReady();
+                try {
+                    mediaRecorder.prepare();
+                    mediaRecorder.start();
+                } catch (IllegalStateException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onCancel() {
+                countdon.cancel();
+                mediaRecorder.reset();
+                //  MediaRecorderReady();
+            }
+
+            @Override
+            public void onFinish(long recordTime) {
+                countdon.cancel();
+                mediaRecorder.stop();
+                // mediaPlayer.release();
+                //  MediaRecorderReady();
+
+                //  Toast.makeText(TestRecord.this, String.valueOf(System.currentTimeMillis()/1000), Toast.LENGTH_SHORT).show();
+                reltv.setVisibility(View.VISIBLE);
+                Main4Activity.viewPager.setPagingEnabled(true);
+                if (AudioSavePathInDevice != null && !TextUtils.isEmpty(AudioSavePathInDevice)) {
+posting(null,null,AudioSavePathInDevice);
+                }
+            }
+
+            @Override
+            public void onLessThanSecond() {
+                countdon.cancel();
+                // recordButton.setListenForRecord(false);
+                reltv.setVisibility(View.VISIBLE);
+            }
+        });
+        posttext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                recordButton.setClickable(false);
+                recordButton.setVisibility(View.INVISIBLE);
+                sendd.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() <= 0) {
+
+                    recordButton.setClickable(true);
+                    recordButton.setVisibility(View.VISIBLE);
+                    sendd.setVisibility(View.GONE);
+                }
+            }
+        });
         homefrag = new Homefragment();
         snapshotlist = new ArrayList<>();
         //snapshotimages=new ArrayList<>();
@@ -326,13 +446,13 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
             @Override
             public void onClick(View v) {
                 if (viduri != null) {
-                    posting(viduri, null);
+                    posting(viduri, null,null);
                     //   getResultsFromApi();
                 } else if (imglist != null && imglist.size() > 0) {
-                    posting(null, imglist);
+                    posting(null, imglist,null);
                     //  sendImage(imglist);
                 } else if (!TextUtils.isEmpty(posttext.getText().toString())) {
-                    posting(null, null);
+                    posting(null, null,null);
                 } else {
                     posttext.setError("");
                 }
@@ -354,23 +474,60 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
             }
         };
 
-        linearLayoutManager.setStackFromEnd(true);
-
+        // linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        homeAdapter = new HomeAdapter(realm, getActivity(), realm.where(Pst.class).findAll(), true, getActivity().getSupportFragmentManager());
+        homeAdapter = new HomeAdapter(realm, getActivity(), realm.where(Pst.class).findAll(), true, getActivity().getSupportFragmentManager(),getActivity());
 //
         recyclerView.setAdapter(homeAdapter);
         recyclerView.getLayoutManager().scrollToPosition(homeAdapter.getItemCount() - 1);
-//
+        recyclerView.setPlayerSelector(PlayerSelector.BY_AREA);
 
         gettingdata();
 //         ffmeg=new MyFfmeg(getContext());
 //        ffmeg.loadFFMpegBinary();
-
+        recordView.setOnBasketAnimationEndListener(new OnBasketAnimationEnd() {
+            @Override
+            public void onAnimationEnd() {
+                reltv.setVisibility(View.VISIBLE);
+                Main4Activity.viewPager.setPagingEnabled(true);
+            }
+        });
         return view;
 
 
+    }
+
+    @AfterPermissionGranted(RC_AUDIO)
+    private boolean checkaudioperm() {
+
+        boolean acpted;
+        if (EasyPermissions.hasPermissions(getContext(), perms)) {
+            // Already have permission, do the thing
+            // ...
+            acpted = true;
+            recordButton.setListenForRecord(true);
+            // attachmentDialog();
+
+        } else {
+            // Do not have permissions, request them now
+            acpted = false;
+            //
+
+        }
+        return acpted;
+    }
+
+    private void MediaRecorderReady() {
+        AudioSavePathInDevice =
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/intouch/audio" +
+                        String.valueOf(System.currentTimeMillis()) + "AudioRecording.3gp";
+        mediaRecorder = new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFile(AudioSavePathInDevice);
     }
 
     @Override
@@ -404,11 +561,13 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                                 img.addAll(post.getImages());
                                 pst.setImages(img);
                             }
-
-                            pst.setPost1(new com.f.schoolsintouchteachers.models.realmObjects.Post1(
-                                    post.getPost1().getThumbnail(), post.getPost1().getVideo(), post.getPost1().getName(),
-                                    post.getPost1().getPostedtime(), post.getPost1().getPost(), post.getPost1().getId()
-                            ));
+                            if (post.getPost1() != null) {
+                                pst.setPost1(new com.f.schoolsintouchteachers.models.realmObjects.Post1(
+                                        post.getPost1().getThumbnail(), post.getPost1().getVideo(), post.getPost1().getName(),
+                                        post.getPost1().getPostedtime(), post.getPost1().getPost(), post.getPost1().getId(), post.getPost1().getType()
+                                        , post.getPost1().getAudio()
+                                ));
+                            }
                             pst.setId(post.getId());
                             pt.add(pst);
                         }
@@ -477,7 +636,10 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                                                         public void execute(Realm realm) {
                                                             Pst pst1 = realm.where(Pst.class).equalTo("id", documentSnapshot.getId()).findFirst();
                                                             assert pst1 != null;
-                                                            pst1.getPost1().setClaps(size);
+                                                            if (pst1.isValid()) {
+                                                                pst1.getPost1().setClaps(size);
+                                                            }
+
 
                                                         }
                                                     });
@@ -529,7 +691,8 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                             if (post.getPost1() != null) {
                                 pst.setPost1(new com.f.schoolsintouchteachers.models.realmObjects.Post1(
                                         post.getPost1().getThumbnail(), post.getPost1().getVideo(), post.getPost1().getName(),
-                                        post.getPost1().getPostedtime(), post.getPost1().getPost(), post.getPost1().getId()
+                                        post.getPost1().getPostedtime(), post.getPost1().getPost(), post.getPost1().getId(),
+                                        post.getPost1().getType(), post.getPost1().getAudio()
                                 ));
                             }
 
@@ -606,9 +769,10 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                                                         @Override
                                                         public void execute(Realm realm) {
                                                             Pst pst1 = realm.where(Pst.class).equalTo("id", documentSnapshot.getId()).findFirst();
-                                                            assert pst1 != null;
-                                                            if (pst1.getPost1() != null) {
-                                                                pst1.getPost1().setClaps(size);
+                                                            if (pst1!=null && pst1.isValid()) {
+                                                                if (pst1.getPost1() != null) {
+                                                                    pst1.getPost1().setClaps(size);
+                                                                }
                                                             }
 
 
@@ -695,8 +859,13 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
 
     }
 
-    private void posting(@Nullable Uri uri, @Nullable ArrayList<Uri> arrayList) {
+    private void posting(@Nullable Uri uri, @Nullable ArrayList<Uri> arrayList,@Nullable String audio) {
         String post = posttext.getText().toString();
+        DateTime dateTime = new DateTime();
+        DateTime msa = dateTime.withZone(DateTimeZone.forID("Africa/Nairobi"));
+        // DocumentReference collectionReference = Config.firestore.document(Config.auth.getCurrentUser().getDisplayName()).collection("posts").document(msa.toString());
+        final Pst p = new Pst();
+        com.f.schoolsintouchteachers.models.realmObjects.Post1 post1 = new com.f.schoolsintouchteachers.models.realmObjects.Post1();
         if (!TextUtils.isEmpty(post)) {
             @SuppressLint("StaticFieldLeak")
             HttpAsync httpAsync = new HttpAsync(post, getActivity().getSharedPreferences("Token", MODE_PRIVATE).getString("mytoken", "")) {
@@ -707,12 +876,8 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                 }
             };
             // httpAsync.execute();
-            DateTime dateTime = new DateTime();
-            DateTime msa = dateTime.withZone(DateTimeZone.forID("Africa/Nairobi"));
-            DocumentReference collectionReference = Config.firestore.document(Config.auth.getCurrentUser().getDisplayName()).collection("posts").document(msa.toString());
-            final Pst p = new Pst();
-            com.f.schoolsintouchteachers.models.realmObjects.Post1 post1 = new com.f.schoolsintouchteachers.models.realmObjects.Post1();
-            if (uri != null && arrayList == null) {
+
+            if (uri != null && arrayList == null&& TextUtils.isEmpty(audio)) {
                 MediaMetadataRetriever g = new MediaMetadataRetriever();
                 g.setDataSource(getContext(), viduri);
                 thumbnl = g.getFrameAtTime(1000);
@@ -769,7 +934,7 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                 //Hide:
                 assert imm != null;
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-            } else if (uri == null && arrayList != null) {
+            } else if (uri == null && arrayList != null && TextUtils.isEmpty(audio)) {
                 post1.setPost(post);
                 post1.setId(msa.toString());
                 post1.setThumbnail(imge);
@@ -828,6 +993,37 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
 //                    }
 //                });
 
+            }
+        }else {
+            if (uri == null && arrayList == null && !TextUtils.isEmpty(audio)){
+                post1.setPost(post);
+                post1.setId(msa.toString());
+                post1.setThumbnail(imge);
+                post1.setPostedtime(String.valueOf(System.currentTimeMillis() / 1000));
+                post1.setName(jina);
+                post1.setAudio(audio);
+                post1.setType(1);
+                post1.setClaps(0);
+                p.setId(msa.toString());
+                p.setPost1(post1);
+                p.setPosting(true);
+                realm.beginTransaction();
+                realm.insert(p);
+                realm.commitTransaction();
+                if (images != null) {
+                    images.clear();
+                }
+                download = null;
+                imge = "";
+                jina = "";
+                thumbnl = null;
+                AudioSavePathInDevice=null;
+                posttext.setText("");
+                recycpics.setVisibility(View.GONE);
+                if (imglist != null) {
+                    imglist.clear();
+                }
+                viduri = null;
             }
 
         }
@@ -1085,7 +1281,7 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                 layview.post(revealAnimationRunnable);
                 final MediaController mediaController = new MediaController(getContext());
                 videoView.setMediaController(mediaController);
-               // mediaController.setAnchorView(videoView);
+                // mediaController.setAnchorView(videoView);
 
                 videoView.setVideoURI(uri);
                 videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -1308,9 +1504,12 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
         try {
             File dir = getContext().getCacheDir();
             deleteDir(dir);
-        }catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
@@ -1321,7 +1520,7 @@ public class Homefragment extends Fragment implements EasyPermissions.Permission
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;

@@ -23,6 +23,10 @@ public class MyMigration implements RealmMigration {
             schema.get("Pst").addField("posting",boolean.class);
             oldVersion++;
         }
+        if (oldVersion==3){
+            schema.get("Post1").addField("type",Integer.class,FieldAttribute.REQUIRED).addField("audio",String.class);
+            oldVersion++;
+        }
 
     }
 }

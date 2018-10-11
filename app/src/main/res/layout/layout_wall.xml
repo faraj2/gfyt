@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
-            app:resize_mode="fixed_height"
+            app:resize_mode="fit"
             app:surface_type="texture_view" />
 
         <ImageView
@@ -56,6 +56,11 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/dont"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:id="@+id/donut"
             android:layout_width="50dp"
@@ -155,13 +160,13 @@ android:visibility="gone"
     </LinearLayout>
     <View
         android:layout_marginTop="5dp"
-        android:background="@android:color/white"
+        android:background="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
     <View
         android:layout_marginBottom="5dp"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+        android:background="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
 </FrameLayout>

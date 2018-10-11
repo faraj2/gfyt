@@ -25,7 +25,7 @@ public class SchoolIntouchteachers extends Application {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(3).migration(new MyMigration()).name("home.realm").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(4).migration(new MyMigration()).name("home.realm").build();
         Realm.setDefaultConfiguration(config);
 
         JodaTimeAndroid.init(this);

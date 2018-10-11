@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center">
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/reltv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+
+        android:layout_toLeftOf="@+id/record_button"
+        android:layout_toStartOf="@+id/record_button"
+        android:background="@drawable/edittext_white">
+
+
+
+        <ImageButton
+            android:id="@+id/attachmnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/ic_action_attach"
+            android:tint="@android:color/black" />
+
+        <EditText
+            android:id="@+id/messagepost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/attachmnt"
+            android:layout_toStartOf="@+id/attachmnt"
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="false"
+            android:gravity="bottom"
+            android:hint="Type your message"
+            android:inputType="textMultiLine"
+            android:maxHeight="200dp"
+            android:maxLines="10"
+            android:padding="10dp"
+            android:scrollbars="none"
+            android:textColor="@android:color/black" />
+
+
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_margin="5dp"
+        android:background="@android:color/transparent"
+        android:padding="3dp"
+        android:src="@drawable/ic_action_send"
+        android:tint="@android:color/background_dark" />
+    <com.devlomi.record_view.RecordView
+        android:id="@+id/record_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/record_button"
+        app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+        app:slide_to_cancel_arrow_color="#000000"
+        app:slide_to_cancel_bounds="8dp"
+        app:slide_to_cancel_margin_right="10dp"
+        app:slide_to_cancel_text="Slide To Cancel"
+        app:counter_time_color="#ff0000"
+        />
+
+    <com.devlomi.record_view.RecordButton
+        android:id="@+id/record_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/recv_bg_mic"
+        android:backgroundTint="@color/cardview_dark_background"
+        android:scaleType="centerInside"
+        app:mic_icon="@drawable/recv_ic_mic_white" />
+
+
+</RelativeLayout>

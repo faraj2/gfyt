@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bluecolor"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linrlyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/bluecolor"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="posted on:31/jun/2018"
+            android:textColor="@android:color/background_light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center">
+            <com.chibde.visualizer.LineBarVisualizer
+                android:id="@+id/visualizer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<FrameLayout
+    android:layout_margin="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageButton
+        android:tint="@color/cardview_light_background"
+        android:id="@+id/ply"
+        android:background="@android:color/transparent"
+        android:src="@drawable/playbutton"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/dont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:visibility="gone"
+        android:id="@+id/donut"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        app:donut_inner_drawable="@drawable/cancel"
+        app:donut_finished_stroke_width="5dp"
+        app:donut_show_text="false"
+        app:donut_circle_starting_degree="10"
+        app:donut_unfinished_stroke_width="1dp"
+        app:donut_unfinished_color="@color/cardview_light_background"
+        />
+
+</FrameLayout>
+        <TextView
+android:text="fvnjvfj"
+            android:id="@+id/claps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="80dp"
+            android:textColor="@android:color/background_light"
+            />
+
+        <com.varunest.sparkbutton.SparkButton
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btnlike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:scaleX="1.6"
+            android:scaleY="1.6"
+            app:sparkbutton_activeImage="@drawable/clapped"
+            app:sparkbutton_iconSize="20dp"
+            app:sparkbutton_inActiveImage="@drawable/clapings"
+            app:sparkbutton_primaryColor="@color/cardview_light_background"
+            app:sparkbutton_secondaryColor="@color/clapped" />
+
+    </RelativeLayout>
+    </LinearLayout>
+
+<View
+
+android:background="@android:color/black"
+android:layout_width="match_parent"
+android:layout_height="5dp"/>
+<View
+android:layout_gravity="bottom"
+android:background="@android:color/black"
+android:layout_width="match_parent"
+android:layout_height="5dp"/>
+</FrameLayout>
